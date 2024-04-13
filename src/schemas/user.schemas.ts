@@ -1,0 +1,46 @@
+import { z } from "zod";
+import {
+  additionalAddresses,
+  commentsSchema,
+  favoritesSchema,
+  productsSchema,
+  ratingsProductsSchema,
+  salesSchema,
+} from ".";
+
+const userSchema = z.object({
+  id: z.number(),
+  name: z.string().max(45),
+  email: z.string().max(45).email(),
+  admin: z.boolean().default(false),
+  cpfOrCnpj: z.string().max(45),
+  phone: z.string().max(45),
+  photo: z.string().max(120).url(),
+  address: z.string().max(60),
+  address_number: z.string().max(10),
+  address_complement: z.string().max(120),
+  cep: z.string().max(10),
+  city: z.string().max(10),
+  state: z.string().max(10),
+  password: z.string().max(120),
+  gender: z.string().max(10).optional(),
+  nickname: z.string().max(45).optional(),
+  profileVisibility: z.boolean().default(true),
+  dateOfBirth: z.date().optional(),
+  bio: z.string().optional(),
+  facebook: z.string().max(100).url().optional(),
+  twitter: z.string().max(100).url().optional(),
+  instagram: z.string().max(100).url().optional(),
+  newsletter: z.boolean(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  deletedAt: z.date().nullable(),
+  products: z.array(productsSchema),
+  ratingsProducts: z.array(ratingsProductsSchema),
+  favoriteProducts: z.array(favoritesSchema),
+  additionalAddresses: z.array(additionalAddresses),
+  sales: z.array(salesSchema),
+  comments: z.array(commentsSchema),
+});
+
+export { userSchema };
